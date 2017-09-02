@@ -4,11 +4,15 @@ import br.com.canoza.domain.model.Enemy;
 import br.com.canoza.domain.model.Player;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static br.com.canoza.repository.utils.EnemyFactory.basicEnemy;
 import static br.com.canoza.repository.utils.EnemyFactory.strongEnemy;
 import static br.com.canoza.repository.utils.PlayerFactory.basicPlayer;
+import static br.com.canoza.repository.utils.PlayerFactory.generatePlayer;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class EncounterServiceTest {
@@ -44,7 +48,7 @@ public class EncounterServiceTest {
         final Enemy enemy = new Enemy();
         enemy.setSpeed(30);
 
-        assertTrue(encounterService.run(player, enemy));
+        assertTrue(encounterService.run(player, enemy));d
 
         enemy.setSpeed(100);
         assertFalse(encounterService.run(player, enemy));
@@ -58,5 +62,12 @@ public class EncounterServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void runTestNullPlayer() {
         encounterService.run(null, basicEnemy());
+    }
+
+    @Test
+    public void generateEnemy() {
+        Optional<Enemy> enemy = encounterService.generateEnemy(generatePlayer());
+        assertNotNull(enemy);
+        assertTrue(enemy.isPresent());
     }
 }
