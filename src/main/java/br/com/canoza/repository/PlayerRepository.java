@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static br.com.canoza.repository.utils.Preconditions.checkNotBlank;
-import static br.com.canoza.repository.utils.Preconditions.checkNotNull;
+import static br.com.canoza.utils.Preconditions.checkNotBlank;
+import static br.com.canoza.utils.Preconditions.checkNotNull;
 
 public class PlayerRepository {
 

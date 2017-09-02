@@ -2,10 +2,10 @@ package br.com.canoza.repository.utils;
 
 import br.com.canoza.domain.model.Player;
 
-import java.util.stream.Stream;
+import static br.com.canoza.utils.GenerationUtils.random;
 
 public class PlayerFactory {
-    public static Player generatePlayer(){
+    public static Player generatePlayer() {
         Player player = new Player();
         player.setName("player");
         player.setHealth(random(100));
@@ -15,8 +15,14 @@ public class PlayerFactory {
         player.setMaxHealth(random(100));
         return player;
     }
-
-    private static int random(final int maxValue){
-        return (int) (Math.random() * maxValue);
+    public static Player basicPlayer(){
+        Player player = new Player();
+        player.setName("player");
+        player.setHealth(100);
+        player.setSpeed(100);
+        player.setStrength(100);
+        player.setExperience(100);
+        player.setMaxHealth(100);
+        return player;
     }
 }

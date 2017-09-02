@@ -1,4 +1,4 @@
-package br.com.canoza.repository.utils;
+package br.com.canoza.utils;
 
 public class Preconditions {
 

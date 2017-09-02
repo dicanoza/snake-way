@@ -6,6 +6,15 @@ public class Enemy extends BaseEntity {
 
     private long givenExperience;
 
+
+    public long getGivenExperience() {
+        return givenExperience;
+    }
+
+    public void setGivenExperience(long givenExperience) {
+        this.givenExperience = givenExperience;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
