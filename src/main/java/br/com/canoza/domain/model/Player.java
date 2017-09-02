@@ -25,30 +25,15 @@ public class Player extends BaseEntity {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof Player)) {
-      return false;
-    }
-    if (!super.equals(o)) {
-      return false;
-    }
-
-    Player player = (Player) o;
-
-    if (maxHealth != player.maxHealth) {
-      return false;
-    }
-    return experience == player.experience;
+  public String toString() {
+    return "Player{" +
+        "maxHealth=" + maxHealth +
+        ", experience=" + experience +
+        ", name='" + name + '\'' +
+        ", strength=" + strength +
+        ", speed=" + speed +
+        ", health=" + health +
+        '}';
   }
 
-  @Override
-  public int hashCode() {
-    int result = super.hashCode();
-    result = 31 * result + maxHealth;
-    result = 31 * result + experience;
-    return result;
-  }
 }

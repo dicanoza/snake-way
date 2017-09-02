@@ -6,29 +6,6 @@ public class Enemy extends BaseEntity {
 
   private int givenExperience;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof Enemy)) {
-      return false;
-    }
-    if (!super.equals(o)) {
-      return false;
-    }
-
-    Enemy enemy = (Enemy) o;
-
-    return givenExperience == enemy.givenExperience;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = super.hashCode();
-    result = 31 * result + givenExperience;
-    return result;
-  }
 
   public int getGivenExperience() {
 
@@ -37,5 +14,16 @@ public class Enemy extends BaseEntity {
 
   public void setGivenExperience(int givenExperience) {
     this.givenExperience = givenExperience;
+  }
+
+  @Override
+  public String toString() {
+    return "Enemy{" +
+        "givenExperience=" + givenExperience +
+        ", name='" + name + '\'' +
+        ", strength=" + strength +
+        ", speed=" + speed +
+        ", health=" + health +
+        '}';
   }
 }

@@ -36,7 +36,7 @@ public class PlayerRepository {
 
       players = (HashMap<String, Player>) objectInputStream.readObject();
 
-    } catch (IOException ex) {
+    } catch (ClassNotFoundException | IOException ex) {
       throw new SnakeWayException("Could not load Player State", ex);
     }
   }
