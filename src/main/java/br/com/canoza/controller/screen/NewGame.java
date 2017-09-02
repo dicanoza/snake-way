@@ -2,18 +2,18 @@ package br.com.canoza.controller.screen;
 
 import static br.com.canoza.controller.engine.GameEngine.getOption;
 import static br.com.canoza.controller.engine.GameEngine.printOptions;
-import static br.com.canoza.controller.engine.GameEngine.printPlayerStatus;
+import static br.com.canoza.controller.engine.GameEngine.printCharacterStatus;
 import static br.com.canoza.controller.screen.Field.initField;
 import static java.lang.System.out;
 
 import br.com.canoza.controller.engine.GameEngine;
-import br.com.canoza.domain.model.Player;
-import br.com.canoza.service.PlayerService;
+import br.com.canoza.domain.model.Character;
+import br.com.canoza.service.CharacterService;
 import java.util.Arrays;
 
 public class NewGame extends Screen {
 
-  private PlayerService playerService = new PlayerService();
+  private CharacterService characterService = new CharacterService();
 
   public NewGame() {
     title = "Snake Way - New Character";
@@ -31,15 +31,15 @@ public class NewGame extends Screen {
     out.println("Insert the Character Name:");
     String name = GameEngine.readString();
 
-    Player player = playerService.createPlayer(name);
+    Character character = characterService.createCharacter(name);
     out.println("This is your Character status");
-    printPlayerStatus(player);
+    printCharacterStatus(character);
     out.println("Do you want to continue?");
     printOptions(Arrays.asList("Yes", "No"));
     if (getOption(1) == 1) {
       render();
     }
-    initField(player, false).render();
+    initField(character, false).render();
   }
 
 

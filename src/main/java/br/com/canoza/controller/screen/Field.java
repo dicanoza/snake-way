@@ -1,15 +1,15 @@
 package br.com.canoza.controller.screen;
 
 import br.com.canoza.domain.model.Enemy;
-import br.com.canoza.domain.model.Player;
+import br.com.canoza.domain.model.Character;
 import br.com.canoza.service.EncounterService;
-import br.com.canoza.service.PlayerService;
+import br.com.canoza.service.CharacterService;
 import java.util.Arrays;
 import java.util.Optional;
 
 public class Field extends Screen {
 
-  private PlayerService playerService = new PlayerService();
+  private CharacterService characterService = new CharacterService();
 
   private Optional<Enemy> enemy;
 
@@ -31,9 +31,9 @@ public class Field extends Screen {
 
   }
 
-  public static Field initField(Player player, boolean hasEnemy) {
+  public static Field initField(Character character, boolean hasEnemy) {
     if (hasEnemy) {
-      return new Field(EncounterService.getInstance().getEncounter(player));
+      return new Field(EncounterService.getInstance().getEncounter(character));
     }
     return new Field(Optional.empty());
   }

@@ -1,6 +1,6 @@
 package br.com.canoza.domain.model;
 
-public class Player extends BaseEntity {
+public class Character extends BaseEntity {
 
   private static final long serialVersionUID = 8384460808672816945L;
 
@@ -26,7 +26,7 @@ public class Player extends BaseEntity {
 
   @Override
   public String toString() {
-    return "Player{" +
+    return "Character{" +
         "maxHealth=" + maxHealth +
         ", experience=" + experience +
         ", name='" + name + '\'' +

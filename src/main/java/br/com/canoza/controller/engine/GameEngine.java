@@ -5,7 +5,7 @@ import static java.lang.System.err;
 import static java.lang.System.out;
 
 import br.com.canoza.controller.screen.MainMenu;
-import br.com.canoza.domain.model.Player;
+import br.com.canoza.domain.model.Character;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,14 +39,14 @@ public class GameEngine {
     return scanner.next();
   }
 
-  public static void printPlayerStatus(Player player) {
-    out.println("Player Status");
-    out.println(format("Name: %s", player.getName()));
-    out.println(format("Experience: %s", player.getExperience()));
-    out.println(format("MaxHealth: %s", player.getMaxHealth()));
-    out.println(format("Health: %s", player.getMaxHealth()));
-    out.println(format("Strength: %s", player.getStrength()));
-    out.println(format("Speed: %s", player.getSpeed()));
+  public static void printCharacterStatus(Character character) {
+    out.println("Character Status");
+    out.println(format("Name: %s", character.getName()));
+    out.println(format("Experience: %s", character.getExperience()));
+    out.println(format("MaxHealth: %s", character.getMaxHealth()));
+    out.println(format("Health: %s", character.getMaxHealth()));
+    out.println(format("Strength: %s", character.getStrength()));
+    out.println(format("Speed: %s", character.getSpeed()));
   }
 
   public static void printOptions(List<String> options) {
