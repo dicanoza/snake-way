@@ -10,10 +10,10 @@ import java.util.Random;
 public class EncounterService {
 
   public static final int ENCOUNTER_PERCENTAGE = 4;
-  public static final int MAX_MODIFIER = 10;
+
   public static final String ENEMY = "Enemy";
   public static final String CHARACTER = "Character";
-  private static final Random random = new Random();
+  private static EnemyService enemyService = new EnemyService();
 
   private static EncounterService encounterService;
 
@@ -43,7 +43,7 @@ public class EncounterService {
     }
   }
 
-  public boolean run(Character character, Enemy enemy) {
+  public boolean flee(Character character, Enemy enemy) {
     checkNotNull(character, CHARACTER);
     checkNotNull(enemy, ENEMY);
 
@@ -57,21 +57,11 @@ public class EncounterService {
   public Optional<Enemy> getEncounter(Character character) {
 
     // 40% of chance to find a monster
-    if (random.nextInt(10) > ENCOUNTER_PERCENTAGE) {
+    if (new Random().nextInt(10) > ENCOUNTER_PERCENTAGE) {
       return Optional.empty();
     }
-    return generateEnemy(character);
+    return enemyService.generateEnemy(character);
   }
 
-  public Optional<Enemy> generateEnemy(Character character) {
-    int max = character.getExperience() * MAX_MODIFIER;
-    Enemy enemy = new Enemy();
-    enemy.setName(ENEMY);
-    enemy.setSpeed(random.nextInt(max));
-    enemy.setHealth(random.nextInt(max));
-    enemy.setStrength(random.nextInt(max));
-    enemy.setGivenExperience(random.nextInt(max));
 
-    return Optional.of(enemy);
-  }
 }

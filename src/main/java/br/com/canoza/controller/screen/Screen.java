@@ -11,7 +11,6 @@ public abstract class Screen{
   protected String title;
   protected String message;
   protected List<String> options;
-  protected Map<Integer, Screen> nextScreen;
 
   public void render() {
     out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -19,6 +18,8 @@ public abstract class Screen{
     out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     out.println(message);
     out.println("------------------------------------------------------------");
+
+
     printOptions(options);
 
   }

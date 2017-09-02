@@ -41,32 +41,27 @@ public class EncounterServiceTest {
   }
 
   @Test
-  public void runTest() {
+  public void fleeTest() {
     final Character character = basicCharacter();
 
     final Enemy enemy = new Enemy();
     enemy.setSpeed(30);
 
-    assertTrue(encounterService.run(character, enemy));
+    assertTrue(encounterService.flee(character, enemy));
 
     enemy.setSpeed(100);
-    assertFalse(encounterService.run(character, enemy));
+    assertFalse(encounterService.flee(character, enemy));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void runTestNullEnemy() {
-    encounterService.run(basicCharacter(), null);
+  public void fleeTestNullEnemy() {
+    encounterService.flee(basicCharacter(), null);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void runTestNullCharacter() {
-    encounterService.run(null, basicEnemy());
+  public void fleeTestNullCharacter() {
+    encounterService.flee(null, basicEnemy());
   }
 
-  @Test
-  public void generateEnemy() {
-    Optional<Enemy> enemy = encounterService.generateEnemy(generateCharacter());
-    assertNotNull(enemy);
-    assertTrue(enemy.isPresent());
-  }
+
 }

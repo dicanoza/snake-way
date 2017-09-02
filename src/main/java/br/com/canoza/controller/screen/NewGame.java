@@ -32,8 +32,12 @@ public class NewGame extends Screen {
     String name = GameEngine.readString();
 
     Character character = characterService.createCharacter(name);
+
+    out.println("------------------------------------------------------------");
     out.println("This is your Character status");
     printCharacterStatus(character);
+
+    out.println("------------------------------------------------------------");
     out.println("Do you want to continue?");
     printOptions(Arrays.asList("Yes", "No"));
     if (getOption(1) == 1) {

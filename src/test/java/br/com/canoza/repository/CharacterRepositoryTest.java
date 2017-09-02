@@ -21,7 +21,7 @@ public class CharacterRepositoryTest {
   @Test
   public void saveCharacterTest() {
     Character character = CharacterFactory.generateCharacter();
-    characterRepository.create(character);
+    characterRepository.save(character);
     Optional<Character> loaded = characterRepository.load(character.getName());
     assertTrue(loaded.isPresent());
     assertEquals(character, loaded.get());
@@ -32,14 +32,14 @@ public class CharacterRepositoryTest {
   public void saveCharacterNullName() {
     Character character = CharacterFactory.generateCharacter();
     character.setName(null);
-    characterRepository.create(character);
+    characterRepository.save(character);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void saveCharacterBlankName() {
     Character character = CharacterFactory.generateCharacter();
     character.setName("");
-    characterRepository.create(character);
+    characterRepository.save(character);
   }
 
 }

@@ -41,7 +41,7 @@ public class CharacterRepository {
     }
   }
 
-  public Character create(final Character character) {
+  public Character save(final Character character) {
     checkNotNull(character, "Character");
     checkNotBlank(character.getName(), "Character Name");
     if (characters.containsKey(character)) {
