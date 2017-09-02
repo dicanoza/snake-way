@@ -15,6 +15,18 @@ public class EncounterService {
   public static final String PLAYER = "Player";
   private static final Random random = new Random();
 
+  private static EncounterService encounterService;
+
+  private EncounterService(){
+  }
+
+  public static EncounterService getInstance(){
+    if(encounterService != null){
+      encounterService = new EncounterService();
+    }
+    return encounterService;
+  }
+
   public void fight(Player player, Enemy enemy) {
     checkNotNull(player, PLAYER);
     checkNotNull(enemy, ENEMY);

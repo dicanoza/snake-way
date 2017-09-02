@@ -16,7 +16,7 @@ import org.junit.Test;
 
 public class EncounterServiceTest {
 
-  private static EncounterService encounterService = new EncounterService();
+  private static EncounterService encounterService = EncounterService.getInstance();
 
   @Test
   public void fightTest() {
