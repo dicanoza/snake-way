@@ -48,7 +48,6 @@ public class EncounterServiceTest {
     enemy.setSpeed(30);
 
     assertTrue(encounterService.run(player, enemy));
-    d
 
     enemy.setSpeed(100);
     assertFalse(encounterService.run(player, enemy));

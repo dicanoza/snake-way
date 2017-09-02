@@ -4,23 +4,23 @@ public class Player extends BaseEntity {
 
   private static final long serialVersionUID = 8384460808672816945L;
 
-  private long maxHealth;
-  private long experience;
+  private int maxHealth;
+  private int experience;
 
 
-  public long getMaxHealth() {
+  public int getMaxHealth() {
     return maxHealth;
   }
 
-  public void setMaxHealth(long maxHealth) {
+  public void setMaxHealth(int maxHealth) {
     this.maxHealth = maxHealth;
   }
 
-  public long getExperience() {
+  public int getExperience() {
     return experience;
   }
 
-  public void setExperience(long experience) {
+  public void setExperience(int experience) {
     this.experience = experience;
   }
 
@@ -47,8 +47,8 @@ public class Player extends BaseEntity {
   @Override
   public int hashCode() {
     int result = super.hashCode();
-    result = 31 * result + (int) (maxHealth ^ (maxHealth >>> 32));
-    result = 31 * result + (int) (experience ^ (experience >>> 32));
+    result = 31 * result + maxHealth;
+    result = 31 * result + experience;
     return result;
   }
 }

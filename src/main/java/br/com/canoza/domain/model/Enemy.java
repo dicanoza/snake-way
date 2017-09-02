@@ -4,16 +4,7 @@ public class Enemy extends BaseEntity {
 
   private static final long serialVersionUID = 5820276049021318346L;
 
-  private long givenExperience;
-
-
-  public long getGivenExperience() {
-    return givenExperience;
-  }
-
-  public void setGivenExperience(long givenExperience) {
-    this.givenExperience = givenExperience;
-  }
+  private int givenExperience;
 
   @Override
   public boolean equals(Object o) {
@@ -35,7 +26,16 @@ public class Enemy extends BaseEntity {
   @Override
   public int hashCode() {
     int result = super.hashCode();
-    result = 31 * result + (int) (givenExperience ^ (givenExperience >>> 32));
+    result = 31 * result + givenExperience;
     return result;
+  }
+
+  public int getGivenExperience() {
+
+    return givenExperience;
+  }
+
+  public void setGivenExperience(int givenExperience) {
+    this.givenExperience = givenExperience;
   }
 }

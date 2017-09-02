@@ -1,19 +1,20 @@
 package br.com.canoza.repository.utils;
 
-import static br.com.canoza.utils.GenerationUtils.random;
-
 import br.com.canoza.domain.model.Player;
+import java.util.Random;
 
 public class PlayerFactory {
+
+  private static final Random random = new Random();
 
   public static Player generatePlayer() {
     Player player = new Player();
     player.setName("player");
-    player.setHealth(random(100));
-    player.setSpeed(random(20));
-    player.setStrength(random(20));
-    player.setExperience(random(50));
-    player.setMaxHealth(random(100));
+    player.setHealth(random.nextInt(100));
+    player.setSpeed(random.nextInt(20));
+    player.setStrength(random.nextInt(20));
+    player.setExperience(random.nextInt(50));
+    player.setMaxHealth(random.nextInt(100));
     return player;
   }
 

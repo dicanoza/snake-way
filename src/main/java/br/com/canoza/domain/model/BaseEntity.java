@@ -7,9 +7,9 @@ public abstract class BaseEntity implements Serializable {
   private static final long serialVersionUID = 8214044594876696646L;
 
   protected String name;
-  protected long strength;
-  protected long speed;
-  protected long health;
+  protected int strength;
+  protected int speed;
+  protected int health;
 
   public String getName() {
     return name;
@@ -19,27 +19,27 @@ public abstract class BaseEntity implements Serializable {
     this.name = name;
   }
 
-  public long getStrength() {
+  public int getStrength() {
     return strength;
   }
 
-  public void setStrength(long strength) {
+  public void setStrength(int strength) {
     this.strength = strength;
   }
 
-  public long getSpeed() {
+  public int getSpeed() {
     return speed;
   }
 
-  public void setSpeed(long speed) {
+  public void setSpeed(int speed) {
     this.speed = speed;
   }
 
-  public long getHealth() {
+  public int getHealth() {
     return health;
   }
 
-  public void setHealth(long health) {
+  public void setHealth(int health) {
     this.health = health;
   }
 
@@ -69,9 +69,9 @@ public abstract class BaseEntity implements Serializable {
   @Override
   public int hashCode() {
     int result = name != null ? name.hashCode() : 0;
-    result = 31 * result + (int) (strength ^ (strength >>> 32));
-    result = 31 * result + (int) (speed ^ (speed >>> 32));
-    result = 31 * result + (int) (health ^ (health >>> 32));
+    result = 31 * result + strength;
+    result = 31 * result + speed;
+    result = 31 * result + health;
     return result;
   }
 }

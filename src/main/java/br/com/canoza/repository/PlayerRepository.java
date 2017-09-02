@@ -4,18 +4,42 @@ import static br.com.canoza.utils.Preconditions.checkNotBlank;
 import static br.com.canoza.utils.Preconditions.checkNotNull;
 
 import br.com.canoza.domain.model.Player;
+import br.com.canoza.exception.SnakeWayException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class PlayerRepository {
 
   public static final String PLAYERS_DAT = "snake-way_players.dat";
-  private static Map<String, Player> players = new HashMap<>();
+  private static HashMap<String, Player> players = new HashMap<>();
+
+  private static void saveState() {
+    try (ObjectOutputStream objectOutputStream =
+        new ObjectOutputStream(new FileOutputStream(PLAYERS_DAT))) {
+
+      objectOutputStream.writeObject(players);
+
+    } catch (IOException ex) {
+      throw new SnakeWayException("Could not save Player State", ex);
+    }
+
+  }
+
+  private static void loadPlayerState() {
+    try (ObjectInputStream objectInputStream =
+        new ObjectInputStream(new FileInputStream(PLAYERS_DAT))) {
+
+      players = (HashMap<String, Player>) objectInputStream.readObject();
+
+    } catch (IOException ex) {
+      throw new SnakeWayException("Could not load Player State", ex);
+    }
+  }
 
   public Player create(final Player player) {
     checkNotNull(player, "Player");
@@ -34,28 +58,5 @@ public class PlayerRepository {
     loadPlayerState();
 
     return Optional.ofNullable(players.get(name));
-  }
-
-  private void saveState() {
-    try (ObjectOutputStream oos =
-        new ObjectOutputStream(new FileOutputStream(PLAYERS_DAT))) {
-
-      oos.writeObject(players);
-
-    } catch (Exception ex) {
-      throw new RuntimeException("Could not save Player State", ex);
-    }
-
-  }
-
-  private void loadPlayerState() {
-    try (ObjectInputStream oos =
-        new ObjectInputStream(new FileInputStream(PLAYERS_DAT))) {
-
-      players = (Map<String, Player>) oos.readObject();
-
-    } catch (Exception ex) {
-      throw new RuntimeException("Could not load Player State", ex);
-    }
   }
 }
