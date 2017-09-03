@@ -6,7 +6,19 @@ public class Character extends BaseEntity {
 
   private int maxHealth;
   private int experience;
+  private int mapPosition;
 
+  @Override
+  public String toString() {
+    return name + "={" +
+        "Experience=" + experience +
+        ", Map Position=" + mapPosition +
+        ", Max Health=" + maxHealth +
+        ", Strength=" + strength +
+        ", Speed=" + speed +
+        ", Health=" + health +
+        '}';
+  }
 
   public int getMaxHealth() {
     return maxHealth;
@@ -24,16 +36,25 @@ public class Character extends BaseEntity {
     this.experience = experience;
   }
 
-  @Override
-  public String toString() {
-    return "Character{" +
-        "maxHealth=" + maxHealth +
-        ", experience=" + experience +
-        ", name='" + name + '\'' +
-        ", strength=" + strength +
-        ", speed=" + speed +
-        ", health=" + health +
-        '}';
+  public int getMapPosition() {
+    return mapPosition;
   }
 
+  public void setMapPosition(int mapPosition) {
+    this.mapPosition = mapPosition;
+  }
+
+
+  public void addExperience(int givenExperience) {
+    this.experience += givenExperience;
+  }
+
+  public void resetHealth() {
+    this.health = maxHealth;
+  }
+
+  public void move(int steps) {
+    this.mapPosition += steps;
+
+  }
 }

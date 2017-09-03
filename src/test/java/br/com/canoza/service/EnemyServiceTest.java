@@ -13,7 +13,7 @@ public class EnemyServiceTest {
 
   @Test
   public void generateEnemy() {
-    Optional<Enemy> enemy = enemyService.generateEnemy(generateCharacter());
+    Optional<Enemy> enemy = enemyService.generateEnemy(12);
     assertNotNull(enemy);
     assertTrue(enemy.isPresent());
   }

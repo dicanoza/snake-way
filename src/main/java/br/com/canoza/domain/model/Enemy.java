@@ -19,11 +19,10 @@ public class Enemy extends BaseEntity {
   @Override
   public String toString() {
     return "Enemy{" +
-        "givenExperience=" + givenExperience +
-        ", name='" + name + '\'' +
-        ", strength=" + strength +
-        ", speed=" + speed +
-        ", health=" + health +
+        "Given Experience=" + givenExperience +
+        ", Strength=" + strength +
+        ", Speed=" + speed +
+        ", Health=" + health +
         '}';
   }
 }

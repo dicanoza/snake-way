@@ -1,5 +1,6 @@
 package br.com.canoza.controller.screen;
 
+import static br.com.canoza.controller.screen.Field.initSafeField;
 import static java.lang.System.out;
 
 import br.com.canoza.controller.engine.GameEngine;
@@ -27,7 +28,7 @@ public class LoadGame extends Screen {
     String name = GameEngine.readString();
     Optional<Character> character = characterService.load(name);
     if(character.isPresent()){
-      Field.initField(character.get(),false).render();
+      initSafeField(character.get());
     }else{
       GameEngine.printActionResultMessage("Invalid character, try another one");
       this.render();

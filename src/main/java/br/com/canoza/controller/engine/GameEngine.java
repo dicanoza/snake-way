@@ -40,27 +40,6 @@ public class GameEngine {
     return scanner.next();
   }
 
-  public static void printCharacterStatus(Character character) {
-    out.println("Character Status");
-    out.println("------------------------------------------------------------");
-    out.println(format("Name: %s", character.getName()));
-    out.println("------------------------------------------------------------");
-    out.println(format("Experience: %s", character.getExperience()));
-    out.println(format("MaxHealth: %s", character.getMaxHealth()));
-    out.println(format("Health: %s", character.getHealth()));
-    out.println(format("Strength: %s", character.getStrength()));
-    out.println(format("Speed: %s", character.getSpeed()));
-  }
-
-  public static void printEnemyStatus(Enemy enemy) {
-    out.println("------------------------------------------------------------");
-    out.println("Enemy Status");
-    out.println("------------------------------------------------------------");
-    out.println(format("Given Experience: %s", enemy.getGivenExperience()));
-    out.println(format("Health: %s", enemy.getHealth()));
-    out.println(format("Strength: %s", enemy.getStrength()));
-    out.println(format("Speed: %s", enemy.getSpeed()));
-  }
 
   public static void printOptions(List<String> options) {
     out.println("------------------------------------------------------------");

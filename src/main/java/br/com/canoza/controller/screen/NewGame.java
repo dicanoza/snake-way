@@ -2,8 +2,7 @@ package br.com.canoza.controller.screen;
 
 import static br.com.canoza.controller.engine.GameEngine.getOption;
 import static br.com.canoza.controller.engine.GameEngine.printOptions;
-import static br.com.canoza.controller.engine.GameEngine.printCharacterStatus;
-import static br.com.canoza.controller.screen.Field.initField;
+import static br.com.canoza.controller.screen.Field.initSafeField;
 import static java.lang.System.out;
 
 import br.com.canoza.controller.engine.GameEngine;
@@ -35,7 +34,7 @@ public class NewGame extends Screen {
 
     out.println("------------------------------------------------------------");
     out.println("This is your Character status");
-    printCharacterStatus(character);
+    out.println(character);
 
     out.println("------------------------------------------------------------");
     out.println("Do you want to continue?");
@@ -43,7 +42,7 @@ public class NewGame extends Screen {
     if (getOption(1) == 1) {
       render();
     }
-    initField(character, false).render();
+    initSafeField(character);
   }
 
 
