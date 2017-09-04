@@ -21,7 +21,7 @@ public class Field extends Screen {
   private Character character;
   private Optional<Enemy> enemy;
 
-  private Field(EncounterService encounterService, CharacterService characterService) {
+  Field(EncounterService encounterService, CharacterService characterService) {
     this.encounterService = encounterService;
     this.characterService = characterService;
   }

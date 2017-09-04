@@ -13,7 +13,7 @@ public class LoadGame extends Screen {
   private CharacterService characterService;
   private Field field;
 
-  private LoadGame(Field field, CharacterService characterService) {
+  LoadGame(Field field, CharacterService characterService) {
     this.field = field;
     this.characterService = characterService;
     title = "Load Game";

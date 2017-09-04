@@ -5,6 +5,7 @@ import static java.lang.System.out;
 import br.com.canoza.domain.model.Character;
 import br.com.canoza.service.CharacterService;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class NewGame extends Screen {
 
@@ -36,21 +37,29 @@ public class NewGame extends Screen {
     out.println("------------------------------------------------------------");
     out.println("Insert the Character Name:");
     String name = readString();
-
-    Character character = characterService.createCharacter(name);
-
-    out.println("------------------------------------------------------------");
-    out.println("This is your Character status");
-    out.println(character);
-
-    out.println("------------------------------------------------------------");
-    out.println("Do you want to continue?");
-    printOptions(Arrays.asList("Yes", "No"));
-    if (getOption(1) == 1) {
+    Optional<Character> load = characterService.load(name);
+    if (load.isPresent()) {
+      out.println("------------------------------------------------------------");
+      out.println("Character already exists, choose another name");
       render();
+    } else {
+
+      Character character = characterService.createCharacter(name);
+
+      out.println("------------------------------------------------------------");
+      out.println("This is your Character status");
+      out.println(character);
+
+      out.println("------------------------------------------------------------");
+      out.println("Do you want to continue?");
+      printOptions(Arrays.asList("Yes", "No"));
+      if (getOption(1) == 1) {
+        render();
+      } else {
+        characterService.create(character);
+        field.initSafeField(character);
+      }
     }
-    characterService.create(character);
-    field.initSafeField(character);
   }
 
 }
