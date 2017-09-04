@@ -1,10 +1,10 @@
 package br.com.canoza.controller;
 
-import br.com.canoza.controller.engine.GameEngine;
+import br.com.canoza.controller.screen.MainMenu;
 
 public class App {
 
-  public static void main(String[] args){
-    GameEngine.init();
+  public static void main(String[] args) {
+    MainMenu.getInstance().render();
   }
 }

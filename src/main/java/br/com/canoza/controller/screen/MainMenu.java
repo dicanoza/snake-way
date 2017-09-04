@@ -1,7 +1,5 @@
 package br.com.canoza.controller.screen;
 
-import static br.com.canoza.controller.engine.GameEngine.getOption;
-
 import java.util.Arrays;
 
 public class MainMenu extends Screen {
@@ -12,6 +10,7 @@ public class MainMenu extends Screen {
 
   private MainMenu(NewGame newGame, LoadGame loadGame) {
     this.newGame = newGame;
+    this.loadGame = loadGame;
     options = Arrays.asList("New Game", "Load Game");
     title = "Snake Way";
     message = "Hi I'm Goku";
@@ -20,7 +19,7 @@ public class MainMenu extends Screen {
 
   public static MainMenu getInstance() {
     if (mainMenu == null) {
-      mainMenu = new MainMenu(NewGame.getInstance(),LoadGame.getInstance());
+      mainMenu = new MainMenu(NewGame.getInstance(), LoadGame.getInstance());
     }
     return mainMenu;
   }
@@ -28,7 +27,7 @@ public class MainMenu extends Screen {
   @Override
   public void render() {
     super.render();
-    int opt = getOption(options.size());
+    int opt = getOption();
 
     if (opt == 0) {
       newGame.render();

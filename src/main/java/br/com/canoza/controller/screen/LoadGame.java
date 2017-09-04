@@ -2,7 +2,6 @@ package br.com.canoza.controller.screen;
 
 import static java.lang.System.out;
 
-import br.com.canoza.controller.engine.GameEngine;
 import br.com.canoza.domain.model.Character;
 import br.com.canoza.service.CharacterService;
 import java.util.Optional;
@@ -34,12 +33,12 @@ public class LoadGame extends Screen {
     out.println(title);
     out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     out.println(message);
-    String name = GameEngine.readString();
+    String name = readString();
     Optional<Character> character = characterService.load(name);
     if (character.isPresent()) {
       field.initSafeField(character.get());
     } else {
-      GameEngine.printActionResultMessage("Invalid character, try another one");
+      printActionResultMessage("Invalid character, try another one");
       this.render();
     }
   }

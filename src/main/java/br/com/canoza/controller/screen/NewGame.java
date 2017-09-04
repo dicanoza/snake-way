@@ -1,10 +1,7 @@
 package br.com.canoza.controller.screen;
 
-import static br.com.canoza.controller.engine.GameEngine.getOption;
-import static br.com.canoza.controller.engine.GameEngine.printOptions;
 import static java.lang.System.out;
 
-import br.com.canoza.controller.engine.GameEngine;
 import br.com.canoza.domain.model.Character;
 import br.com.canoza.service.CharacterService;
 import java.util.Arrays;
@@ -15,7 +12,7 @@ public class NewGame extends Screen {
   private CharacterService characterService;
   private Field field;
 
-  private NewGame(Field field, CharacterService characterService) {
+  protected NewGame(Field field, CharacterService characterService) {
     this.field = field;
     this.characterService = characterService;
     title = "Snake Way - New Character";
@@ -38,7 +35,7 @@ public class NewGame extends Screen {
     out.println(message);
     out.println("------------------------------------------------------------");
     out.println("Insert the Character Name:");
-    String name = GameEngine.readString();
+    String name = readString();
 
     Character character = characterService.createCharacter(name);
 
@@ -55,6 +52,5 @@ public class NewGame extends Screen {
     characterService.create(character);
     field.initSafeField(character);
   }
-
 
 }

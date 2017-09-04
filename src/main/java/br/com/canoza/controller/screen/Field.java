@@ -1,10 +1,8 @@
 package br.com.canoza.controller.screen;
 
-import static br.com.canoza.controller.engine.GameEngine.printActionResultMessage;
-import static br.com.canoza.controller.engine.GameEngine.printOptions;
+
 import static java.lang.System.out;
 
-import br.com.canoza.controller.engine.GameEngine;
 import br.com.canoza.domain.model.Character;
 import br.com.canoza.domain.model.Enemy;
 import br.com.canoza.service.CharacterService;
@@ -30,7 +28,7 @@ public class Field extends Screen {
 
   public static Field getInstance() {
     if (field == null) {
-      field = new Field(EncounterService.getInstance(), CharacterService.getInstance());
+      field = new Field(EncounterService.getInstance(),CharacterService.getInstance());
     }
     return field;
   }
@@ -100,7 +98,7 @@ public class Field extends Screen {
   }
 
   private void encounterRender() {
-    int option = GameEngine.getOption(1);
+    int option = getOption();
     if (option == 0) {
       fight();
     } else {
@@ -155,7 +153,7 @@ public class Field extends Screen {
   }
 
   private void noEncounterRender() {
-    int option = GameEngine.getOption(options.size() - 1);
+    int option = getOption();
     switch (option) {
       case 0: {
         character.move(1);
@@ -171,7 +169,7 @@ public class Field extends Screen {
         save();
         return;
       }
-      default: {
+      case 3: {
         return;
       }
     }
