@@ -60,16 +60,20 @@ public class EncounterService {
   }
 
   public Optional<Enemy> getEncounter(Character character, boolean jump) {
-    int randomNumber = new Random().nextInt(BOUND);
-    if (randomNumber < RUN_ENCOUNTER_PERCENTAGE
-        || (jump && randomNumber < JUMP_ENCOUNTER_PERCENTAGE)) {
+    checkNotNull(character,"Character");
+    int randomNumber = randomNumber();
+    if (randomNumber <= RUN_ENCOUNTER_PERCENTAGE
+        || (jump && randomNumber <= JUMP_ENCOUNTER_PERCENTAGE)) {
       return enemyService.generateEnemy(character.getExperience());
     }
     return Optional.empty();
   }
 
-  private int luckFactor(int variable) {
+  protected int luckFactor(int variable) {
     return Math.round(variable + variable * random.nextFloat());
   }
 
+  protected int randomNumber(){
+    return new Random().nextInt(BOUND);
+  }
 }

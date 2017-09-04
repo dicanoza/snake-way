@@ -5,17 +5,16 @@ import br.com.canoza.domain.model.Enemy;
 public class EnemyFactory {
 
   public static Enemy basicEnemy() {
-    return createEnemy(50, "Saibaman");
+    return createEnemy(50);
   }
 
   public static Enemy strongEnemy() {
-    return createEnemy(150, "Vegeta");
+    return createEnemy(150);
 
   }
 
-  private static Enemy createEnemy(int value, String name) {
+  private static Enemy createEnemy(int value) {
     Enemy enemy = new Enemy();
-    enemy.setName(name);
     enemy.setSpeed(value);
     enemy.setHealth(value);
     enemy.setStrength(value);

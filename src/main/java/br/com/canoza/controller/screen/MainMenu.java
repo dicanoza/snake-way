@@ -6,11 +6,23 @@ import java.util.Arrays;
 
 public class MainMenu extends Screen {
 
-  public MainMenu() {
+  private static MainMenu mainMenu;
+  private NewGame newGame;
+  private LoadGame loadGame;
+
+  private MainMenu(NewGame newGame, LoadGame loadGame) {
+    this.newGame = newGame;
     options = Arrays.asList("New Game", "Load Game");
     title = "Snake Way";
     message = "Hi I'm Goku";
 
+  }
+
+  public static MainMenu getInstance() {
+    if (mainMenu == null) {
+      mainMenu = new MainMenu(NewGame.getInstance(),LoadGame.getInstance());
+    }
+    return mainMenu;
   }
 
   @Override
@@ -19,9 +31,9 @@ public class MainMenu extends Screen {
     int opt = getOption(options.size());
 
     if (opt == 0) {
-      new NewGame().render();
+      newGame.render();
     } else {
-      new LoadGame().render();
+      loadGame.render();
     }
 
   }

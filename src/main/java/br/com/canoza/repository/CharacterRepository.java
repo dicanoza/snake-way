@@ -16,41 +16,72 @@ import java.util.Optional;
 public class CharacterRepository {
 
   public static final String CHARACTERS_DAT = "snake-way_characters.dat";
-  private static HashMap<String, Character> characters = new HashMap<>();
+  private static CharacterRepository characterRepository;
+  private HashMap<String, Character> characters = new HashMap<>();
 
-  private static void saveState() {
-    try (ObjectOutputStream objectOutputStream =
-        new ObjectOutputStream(new FileOutputStream(CHARACTERS_DAT))) {
-
-      objectOutputStream.writeObject(characters);
-
-    } catch (IOException ex) {
-      throw new SnakeWayException("Could not save Character State", ex);
-    }
-
+  private CharacterRepository() {
   }
 
-  private static void loadCharacterState() {
+  public static CharacterRepository getInstance() {
+    if (characterRepository == null) {
+      characterRepository = new CharacterRepository();
+    }
+    return characterRepository;
+  }
+
+  protected void saveState() throws IOException {
+    try (ObjectOutputStream objectOutputStream =
+        new ObjectOutputStream(new FileOutputStream(CHARACTERS_DAT))) {
+      objectOutputStream.writeObject(characters);
+    }
+  }
+
+  private void loadCharacterState() {
     try (ObjectInputStream objectInputStream =
         new ObjectInputStream(new FileInputStream(CHARACTERS_DAT))) {
 
       characters = (HashMap<String, Character>) objectInputStream.readObject();
 
-    } catch (ClassNotFoundException | IOException ex) {
+    } catch (ClassCastException | ClassNotFoundException | IOException ex) {
       throw new SnakeWayException("Could not load Character State", ex);
     }
   }
 
-  public Character save(final Character character) {
+
+  public Character create(final Character character) {
     checkNotNull(character, "Character");
     checkNotBlank(character.getName(), "Character Name");
-    if (characters.containsKey(character)) {
+    if (characters.containsKey(character.getName())) {
       throw new IllegalArgumentException(
           String.format("Character with the name %s already exists", character.getName()));
     }
 
     characters.put(character.getName(), character);
-    saveState();
+
+    try {
+      saveState();
+    } catch (IOException ex) {
+      throw new SnakeWayException("Could not save Character State", ex);
+    }
+
+    return character;
+  }
+
+  public Character save(final Character character) {
+    checkNotNull(character, "Character");
+    checkNotBlank(character.getName(), "Character Name");
+    if (!characters.containsKey(character.getName())) {
+      throw new IllegalArgumentException(
+          String.format("Character with the name %s does not exists", character.getName()));
+    }
+
+    characters.put(character.getName(), character);
+
+    try {
+      saveState();
+    } catch (IOException ex) {
+      throw new SnakeWayException("Could not save Character State", ex);
+    }
     return character;
   }
 

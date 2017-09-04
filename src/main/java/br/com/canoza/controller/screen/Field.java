@@ -2,7 +2,6 @@ package br.com.canoza.controller.screen;
 
 import static br.com.canoza.controller.engine.GameEngine.printActionResultMessage;
 import static br.com.canoza.controller.engine.GameEngine.printOptions;
-import static java.lang.System.*;
 import static java.lang.System.out;
 
 import br.com.canoza.controller.engine.GameEngine;
@@ -15,40 +14,59 @@ import java.util.Optional;
 
 public class Field extends Screen {
 
-  private static final EncounterService encounterService = EncounterService.getInstance();
   private static final int END = 25;
-  private CharacterService characterService = new CharacterService();
+  private static Field field;
+
+  private EncounterService encounterService;
+  private CharacterService characterService;
 
   private Character character;
   private Optional<Enemy> enemy;
 
-  private Field() {
-    title = "Field";
-    message = "you get here";
+  private Field(EncounterService encounterService, CharacterService characterService) {
+    this.encounterService = encounterService;
+    this.characterService = characterService;
   }
 
-
-  private Field(Character character, Optional<Enemy> enemy) {
-    this();
-    this.character = character;
-    this.enemy = enemy;
-    if (enemy.isPresent()) {
-      options = Arrays.asList("Fight", "Flee");
-    } else {
-      options = Arrays.asList("Run to the next field", "Jump to shortcut", "Save & exit");
+  public static Field getInstance() {
+    if (field == null) {
+      field = new Field(EncounterService.getInstance(), CharacterService.getInstance());
     }
-
+    return field;
   }
 
-  public static void initSafeField(Character character) {
+  public void initSafeField(Character character) {
     initField(character, false, false);
   }
 
-  private static void initField(Character character, boolean hasEnemy, boolean jump) {
+  private void initField(Character character, boolean hasEnemy, boolean jump) {
     if (hasEnemy) {
-      checkMapPosition(character.getMapPosition(),new Field(character, encounterService.getEncounter(character, jump)));
+      checkMapPosition(character.getMapPosition(),
+          configure(character, encounterService.getEncounter(character, jump)));
     }
-    checkMapPosition(character.getMapPosition(), new Field(character, Optional.empty()));
+    checkMapPosition(character.getMapPosition(), configure(character, Optional.empty()));
+  }
+
+  private Field configure(Character character, Optional<Enemy> enemy) {
+    title = "Field";
+    message = "you get here";
+    this.character = character;
+    this.enemy = enemy;
+    if (enemy.isPresent()) {
+      options = Arrays.asList("Fight", "Flee", "Exit");
+    } else {
+      options = Arrays.asList("Run to the next field", "Jump to shortcut", "Save & exit", "Exit");
+    }
+    return this;
+  }
+
+  private void checkMapPosition(int mapPosition, Field field) {
+    if (mapPosition >= END) {
+      out.println("Congratulations!! You have reached King Kai planet!");
+    } else {
+      field.render();
+    }
+
   }
 
   private void runToFieldWithEnemy(Character character) {
@@ -136,17 +154,8 @@ public class Field extends Screen {
     }
   }
 
-  private static void checkMapPosition(int mapPosition, Field field){
-    if(mapPosition >= END){
-      out.println("Congratulations!! You have reached King Kai planet!");
-    }else{
-      field.render();
-    }
-
-  }
-
   private void noEncounterRender() {
-    int option = GameEngine.getOption(2);
+    int option = GameEngine.getOption(options.size() - 1);
     switch (option) {
       case 0: {
         character.move(1);
@@ -160,6 +169,9 @@ public class Field extends Screen {
       }
       case 2: {
         save();
+        return;
+      }
+      default: {
         return;
       }
     }

@@ -18,7 +18,7 @@ public class GameEngine {
   }
 
   public static void init() {
-    new MainMenu().render();
+    MainMenu.getInstance().render();
   }
 
   public static int getOption(int max) {

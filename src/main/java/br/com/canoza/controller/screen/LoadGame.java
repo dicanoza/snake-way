@@ -1,6 +1,5 @@
 package br.com.canoza.controller.screen;
 
-import static br.com.canoza.controller.screen.Field.initSafeField;
 import static java.lang.System.out;
 
 import br.com.canoza.controller.engine.GameEngine;
@@ -11,13 +10,23 @@ import java.util.Optional;
 public class LoadGame extends Screen {
 
 
-  private CharacterService characterService = new CharacterService();
+  private static LoadGame loadGame;
+  private CharacterService characterService;
+  private Field field;
 
-  public LoadGame() {
+  private LoadGame(Field field, CharacterService characterService) {
+    this.field = field;
+    this.characterService = characterService;
     title = "Load Game";
     message = "Please insert the name of your character";
   }
 
+  public static LoadGame getInstance() {
+    if (loadGame == null) {
+      loadGame = new LoadGame(Field.getInstance(), CharacterService.getInstance());
+    }
+    return loadGame;
+  }
 
   @Override
   public void render() {
@@ -27,9 +36,9 @@ public class LoadGame extends Screen {
     out.println(message);
     String name = GameEngine.readString();
     Optional<Character> character = characterService.load(name);
-    if(character.isPresent()){
-      initSafeField(character.get());
-    }else{
+    if (character.isPresent()) {
+      field.initSafeField(character.get());
+    } else {
       GameEngine.printActionResultMessage("Invalid character, try another one");
       this.render();
     }

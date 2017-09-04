@@ -4,45 +4,6 @@ import java.io.Serializable;
 
 public abstract class BaseEntity implements Serializable {
 
-  private static final long serialVersionUID = 8214044594876696646L;
-
-  protected String name;
-  protected int strength;
-  protected int speed;
-  protected int health;
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public int getStrength() {
-    return strength;
-  }
-
-  public void setStrength(int strength) {
-    this.strength = strength;
-  }
-
-  public int getSpeed() {
-    return speed;
-  }
-
-  public void setSpeed(int speed) {
-    this.speed = speed;
-  }
-
-  public int getHealth() {
-    return health;
-  }
-
-  public void setHealth(int health) {
-    this.health = health;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -54,24 +15,52 @@ public abstract class BaseEntity implements Serializable {
 
     BaseEntity that = (BaseEntity) o;
 
-    if (strength != that.strength) {
+    if (strength != null ? !strength.equals(that.strength) : that.strength != null) {
       return false;
     }
-    if (speed != that.speed) {
+    if (speed != null ? !speed.equals(that.speed) : that.speed != null) {
       return false;
     }
-    if (health != that.health) {
-      return false;
-    }
-    return name != null ? name.equals(that.name) : that.name == null;
+    return health != null ? health.equals(that.health) : that.health == null;
   }
 
   @Override
   public int hashCode() {
-    int result = name != null ? name.hashCode() : 0;
-    result = 31 * result + strength;
-    result = 31 * result + speed;
-    result = 31 * result + health;
+    int result = strength != null ? strength.hashCode() : 0;
+    result = 31 * result + (speed != null ? speed.hashCode() : 0);
+    result = 31 * result + (health != null ? health.hashCode() : 0);
     return result;
+  }
+
+  private static final long serialVersionUID = 8214044594876696646L;
+
+
+  protected Integer strength;
+  protected Integer speed;
+  protected Integer health;
+
+
+  public Integer getStrength() {
+    return strength;
+  }
+
+  public void setStrength(Integer strength) {
+    this.strength = strength;
+  }
+
+  public Integer getSpeed() {
+    return speed;
+  }
+
+  public void setSpeed(Integer speed) {
+    this.speed = speed;
+  }
+
+  public Integer getHealth() {
+    return health;
+  }
+
+  public void setHealth(Integer health) {
+    this.health = health;
   }
 }

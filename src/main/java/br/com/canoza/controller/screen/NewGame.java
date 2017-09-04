@@ -2,7 +2,6 @@ package br.com.canoza.controller.screen;
 
 import static br.com.canoza.controller.engine.GameEngine.getOption;
 import static br.com.canoza.controller.engine.GameEngine.printOptions;
-import static br.com.canoza.controller.screen.Field.initSafeField;
 import static java.lang.System.out;
 
 import br.com.canoza.controller.engine.GameEngine;
@@ -12,12 +11,23 @@ import java.util.Arrays;
 
 public class NewGame extends Screen {
 
-  private CharacterService characterService = new CharacterService();
+  private static NewGame newGame;
+  private CharacterService characterService;
+  private Field field;
 
-  public NewGame() {
+  private NewGame(Field field, CharacterService characterService) {
+    this.field = field;
+    this.characterService = characterService;
     title = "Snake Way - New Character";
     message = "This is time for you to start your adventure, let's choose a name for your "
         + "character";
+  }
+
+  public static NewGame getInstance() {
+    if (newGame == null) {
+      newGame = new NewGame(Field.getInstance(), CharacterService.getInstance());
+    }
+    return newGame;
   }
 
   @Override
@@ -42,7 +52,8 @@ public class NewGame extends Screen {
     if (getOption(1) == 1) {
       render();
     }
-    initSafeField(character);
+    characterService.create(character);
+    field.initSafeField(character);
   }
 
 
