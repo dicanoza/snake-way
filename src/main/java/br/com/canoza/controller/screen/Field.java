@@ -19,16 +19,16 @@ public class Field extends Screen {
   private CharacterService characterService;
 
   private Character character;
-  private Optional<Enemy> enemy;
+  private Enemy enemy;
 
-  Field(EncounterService encounterService, CharacterService characterService) {
+  protected Field(EncounterService encounterService, CharacterService characterService) {
     this.encounterService = encounterService;
     this.characterService = characterService;
   }
 
   public static Field getInstance() {
     if (field == null) {
-      field = new Field(EncounterService.getInstance(),CharacterService.getInstance());
+      field = new Field(EncounterService.getInstance(), CharacterService.getInstance());
     }
     return field;
   }
@@ -37,41 +37,45 @@ public class Field extends Screen {
     initField(character, false, false);
   }
 
-  private void initField(Character character, boolean hasEnemy, boolean jump) {
-    if (hasEnemy) {
-      checkMapPosition(character.getMapPosition(),
-          configure(character, encounterService.getEncounter(character, jump)));
+  private void initField(Character character, boolean canHaveEnemy, boolean jump) {
+    if (canHaveEnemy) {
+      configure(character, encounterService.getEncounter(character, jump));
+      checkMapPosition(character.getMapPosition());
+    } else {
+      configure(character, Optional.empty());
+      checkMapPosition(character.getMapPosition());
     }
-    checkMapPosition(character.getMapPosition(), configure(character, Optional.empty()));
+
   }
 
-  private Field configure(Character character, Optional<Enemy> enemy) {
+  private void configure(Character character, Optional<Enemy> enemy) {
     title = "Field";
     message = "you get here";
     this.character = character;
-    this.enemy = enemy;
+
     if (enemy.isPresent()) {
+      this.enemy = enemy.get();
       options = Arrays.asList("Fight", "Flee", "Exit");
     } else {
+      this.enemy = null;
       options = Arrays.asList("Run to the next field", "Jump to shortcut", "Save & exit", "Exit");
     }
-    return this;
   }
 
-  private void checkMapPosition(int mapPosition, Field field) {
+  private void checkMapPosition(int mapPosition) {
     if (mapPosition >= END) {
       out.println("Congratulations!! You have reached King Kai planet!");
     } else {
-      field.render();
+      this.render();
     }
 
   }
 
-  private void runToFieldWithEnemy(Character character) {
+  protected void runToFieldWithEnemy(Character character) {
     initField(character, true, false);
   }
 
-  private void jumpToFieldWithEnemy(Character character) {
+  protected void jumpToFieldWithEnemy(Character character) {
     initField(character, true, true);
   }
 
@@ -82,11 +86,11 @@ public class Field extends Screen {
     out.println(message);
     out.println("------------------------------------------------------------");
     out.println(character);
-    if (enemy.isPresent()) {
+    if (enemy != null) {
       out.println("------------------------------------------------------------");
       out.println("Enemy appeared");
       out.println("------------------------------------------------------------");
-      out.println(enemy.get());
+      out.println(enemy);
       out.println("------------------------------------------------------------");
       printOptions(options);
       encounterRender();
@@ -99,16 +103,23 @@ public class Field extends Screen {
 
   private void encounterRender() {
     int option = getOption();
-    if (option == 0) {
-      fight();
-    } else {
-      flee();
+    switch (option) {
+      case 0: {
+        fight();
+        break;
+      }
+      case 1: {
+        flee();
+        break;
+      }
+      case 2: {
+        return;
+      }
     }
-
   }
 
   private void flee() {
-    if (encounterService.flee(character, enemy.get())) {
+    if (encounterService.flee(character, enemy)) {
       printActionResultMessage("Fled!");
       initSafeField(character);
     } else {
@@ -118,37 +129,49 @@ public class Field extends Screen {
   }
 
   private void fight() {
-    checkFightResult(encounterService.fight(character, enemy.get()));
+    checkFightResult(encounterService.fight(character, enemy));
   }
 
   private void checkFightResult(int strike) {
     if (strike > 0) {
-      printActionResultMessage(String.format("You hit the enemy %d points.", strike));
-      if (enemy.get().getHealth() > 0) {
-        this.render();
-      } else {
-        printActionResultMessage(String
-            .format("You defeated the enemy, and gained %d points of experience.",
-                enemy.get().getGivenExperience()));
-        character.addExperience(enemy.get().getGivenExperience());
-
-        if (character.getExperience() >= 20) {
-          printActionResultMessage(
-              "Congratulations!! You have reached a proper level, I'll take you to King Kai!");
-        } else {
-          out.println("Going to next field");
-          character.resetHealth();
-          runToFieldWithEnemy(character);
-        }
-      }
+      hitEnemy(strike);
     } else {
-      printActionResultMessage(String.format("Enemy hits you %d points.", Math.abs(strike)));
-      if (character.getHealth() <= 0) {
-        out.println("Your life has ended.");
-        out.println("GAME OVER");
-      } else {
-        this.render();
-      }
+      hitReceived(strike);
+    }
+  }
+
+  private void hitReceived(int strike) {
+    printActionResultMessage(String.format("Enemy hits you %d points.", Math.abs(strike)));
+    if (character.getHealth() <= 0) {
+      out.println("Your life has ended.");
+      out.println("GAME OVER");
+    } else {
+      this.render();
+    }
+  }
+
+  private void hitEnemy(int strike) {
+    printActionResultMessage(String.format("You hit the enemy %d points.", strike));
+    if (enemy.getHealth() > 0) {
+      this.render();
+    } else {
+      enemyDefeated();
+    }
+  }
+
+  private void enemyDefeated() {
+    printActionResultMessage(String
+        .format("You defeated the enemy, and gained %d points of experience.",
+            enemy.getGivenExperience()));
+    character.addExperience(enemy.getGivenExperience());
+
+    if (character.getExperience() >= 20) {
+      printActionResultMessage(
+          "Congratulations!! You have reached a proper level, I'll take you to King Kai!");
+    } else {
+      out.println("Going to next field");
+      character.resetHealth();
+      runToFieldWithEnemy(character);
     }
   }
 

@@ -15,6 +15,7 @@ public class CharacterFactory {
     character.setStrength(random.nextInt(20));
     character.setExperience(random.nextInt(50));
     character.setMaxHealth(random.nextInt(100));
+    character.setMapPosition(0);
     return character;
   }
 
@@ -26,6 +27,7 @@ public class CharacterFactory {
     character.setStrength(100);
     character.setExperience(100);
     character.setMaxHealth(100);
+    character.setMapPosition(0);
     return character;
   }
 }

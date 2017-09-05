@@ -47,7 +47,7 @@ public abstract class Screen {
     }
   }
 
-  public String readString() {
+  String readString() {
     return getScanner().next();
   }
 

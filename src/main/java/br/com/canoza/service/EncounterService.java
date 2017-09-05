@@ -69,7 +69,7 @@ public class EncounterService {
     return Optional.empty();
   }
 
-  protected int luckFactor(int variable) {
+  public int luckFactor(int variable) {
     return Math.round(variable + variable * random.nextFloat());
   }
 

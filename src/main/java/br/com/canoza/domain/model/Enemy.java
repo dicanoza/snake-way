@@ -18,12 +18,12 @@ public class Enemy extends BaseEntity {
 
   @Override
   public String toString() {
-    return "Enemy{" +
-        "Given Experience=" + givenExperience +
-        ", Strength=" + strength +
-        ", Speed=" + speed +
-        ", Health=" + health +
-        '}';
+    return "Enemy{"
+        + "Given Experience=" + givenExperience
+        + ", Strength=" + strength
+        + ", Speed=" + speed
+        + ", Health=" + health
+        + '}';
   }
 
   @Override

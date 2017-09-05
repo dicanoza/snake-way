@@ -8,7 +8,7 @@ public class MainMenu extends Screen {
   private NewGame newGame;
   private LoadGame loadGame;
 
-   MainMenu(NewGame newGame, LoadGame loadGame) {
+  protected MainMenu(NewGame newGame, LoadGame loadGame) {
     this.newGame = newGame;
     this.loadGame = loadGame;
     options = Arrays.asList("New Game", "Load Game");

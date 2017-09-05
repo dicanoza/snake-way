@@ -58,14 +58,14 @@ public class Character extends BaseEntity {
 
   @Override
   public String toString() {
-    return name + "={" +
-        "Experience=" + experience +
-        ", Map Position=" + mapPosition +
-        ", Max Health=" + maxHealth +
-        ", Strength=" + strength +
-        ", Speed=" + speed +
-        ", Health=" + health +
-        '}';
+    return name + "={"
+        + "Experience=" + experience
+        + ", Map Position=" + mapPosition
+        + ", Max Health=" + maxHealth
+        + ", Strength=" + strength
+        + ", Speed=" + speed
+        + ", Health=" + health
+        + '}';
   }
 
   @Override

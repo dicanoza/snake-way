@@ -2,7 +2,9 @@ package br.com.canoza.controller.screen;
 
 import static br.com.canoza.repository.CharacterRepository.CHARACTERS_DAT;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -87,4 +89,10 @@ public class LoadGameTest {
   }
 
 
+  @Test
+  public void testInstance(){
+    LoadGame instance = LoadGame.getInstance();
+    assertNotNull(instance);
+    assertTrue(LoadGame.getInstance() == instance);
+  }
 }
