@@ -6,6 +6,9 @@ import br.com.canoza.domain.model.Character;
 import br.com.canoza.service.CharacterService;
 import java.util.Optional;
 
+/**
+ * Screen for load a game.
+ */
 public class LoadGame extends Screen {
 
 
@@ -20,6 +23,10 @@ public class LoadGame extends Screen {
     message = "Please insert the name of your character";
   }
 
+  /**
+   * Singleton implementation.
+   * @return an instance of {@link LoadGame}.
+   */
   public static LoadGame getInstance() {
     if (loadGame == null) {
       loadGame = new LoadGame(Field.getInstance(), CharacterService.getInstance());

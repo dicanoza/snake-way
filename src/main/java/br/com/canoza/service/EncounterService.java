@@ -21,6 +21,11 @@ public class EncounterService {
   private EncounterService() {
   }
 
+  /**
+   * Singleton implementation.
+   *
+   * @return {@link EncounterService}.
+   */
   public static EncounterService getInstance() {
     if (encounterService == null) {
       encounterService = new EncounterService();
@@ -28,6 +33,15 @@ public class EncounterService {
     return encounterService;
   }
 
+  /**
+   * Emulates a fight between a {@link Character} and an {@link Enemy}. The result is base on a
+   * random value and the strength of the entities. The result is calculated Character(strength *
+   * luck + strength) - Enemy(strength * luck + strength).
+   *
+   * @param character to fight.
+   * @param enemy to fight.
+   * @return the result of the fight.
+   */
   public int fight(Character character, Enemy enemy) {
     checkNotNull(character, CHARACTER);
     checkNotNull(enemy, ENEMY);
@@ -44,6 +58,15 @@ public class EncounterService {
     return strike;
   }
 
+  /**
+   * Emulates the {@link Character} trying to flee from the {@link Enemy}. The result is base on a
+   * random value and the speed of the entities. The result is calculated Character(speed * luck +
+   * speed) - Enemy(speed * luck + speed).
+   *
+   * @param character who wants to flee.
+   * @param enemy who wants to chase.
+   * @return boolean saying if the character was able to flee.
+   */
   public boolean flee(Character character, Enemy enemy) {
     checkNotNull(character, CHARACTER);
     checkNotNull(enemy, ENEMY);
@@ -59,16 +82,30 @@ public class EncounterService {
     return false;
   }
 
+  /**
+   * Based on luck, will determinate if there will be an encounter or not. If the character have
+   * jumped it will have more chance to find an enemy.
+   *
+   * @param character who wants to look for enemies.
+   * @param jump factor to increase the probability of finding an enemy.
+   * @return {@link Optional} of {@link Enemy}, it will be filled if there will be an enemy.
+   */
   public Optional<Enemy> getEncounter(Character character, boolean jump) {
-    checkNotNull(character,"Character");
+    checkNotNull(character, "Character");
     int randomNumber = randomNumber();
     if (randomNumber <= RUN_ENCOUNTER_PERCENTAGE
         || (jump && randomNumber <= JUMP_ENCOUNTER_PERCENTAGE)) {
-      return enemyService.generateEnemy(character.getExperience());
+      return Optional.of(enemyService.generateEnemy(character.getExperience()));
     }
     return Optional.empty();
   }
 
+  /**
+   * Based on a random factor retrieves a new value for an integer.
+   *
+   * @param variable base of the luck operation.
+   * @return Math.round(variable + variable * random.nextFloat()).
+   */
   public int luckFactor(int variable) {
     return Math.round(variable + variable * random.nextFloat());
   }

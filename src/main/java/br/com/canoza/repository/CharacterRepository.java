@@ -19,9 +19,17 @@ public class CharacterRepository {
   private static CharacterRepository characterRepository;
   private HashMap<String, Character> characters = new HashMap<>();
 
+  /**
+   * Class to manipulate persistent data of Characters.
+   */
   private CharacterRepository() {
   }
 
+  /**
+   * Singleton implementation.
+   *
+   * @return an instance of {@link CharacterRepository}.
+   */
   public static CharacterRepository getInstance() {
     if (characterRepository == null) {
       characterRepository = new CharacterRepository();
@@ -29,6 +37,11 @@ public class CharacterRepository {
     return characterRepository;
   }
 
+  /**
+   * Saves the state of to disk.
+   *
+   * @throws IOException if something goes wrong when writhing data to the disk.
+   */
   protected void saveState() throws IOException {
     try (ObjectOutputStream objectOutputStream =
         new ObjectOutputStream(new FileOutputStream(CHARACTERS_DAT))) {
@@ -36,6 +49,9 @@ public class CharacterRepository {
     }
   }
 
+  /**
+   * Loads state from disk.
+   */
   private void loadCharacterState() {
     try (ObjectInputStream objectInputStream =
         new ObjectInputStream(new FileInputStream(CHARACTERS_DAT))) {
@@ -47,8 +63,12 @@ public class CharacterRepository {
     }
   }
 
-
-  public Character create(final Character character) {
+  /**
+   * Inserts the new character into the context and save it to the disk.
+   *
+   * @param character a {@link Character}.
+   */
+  public void create(final Character character) {
     checkNotNull(character, "Character");
     checkNotBlank(character.getName(), "Character Name");
     if (characters.containsKey(character.getName())) {
@@ -64,10 +84,14 @@ public class CharacterRepository {
       throw new SnakeWayException("Could not save Character State", ex);
     }
 
-    return character;
   }
 
-  public Character save(final Character character) {
+  /**
+   * Save the state of an existing {@link Character}.
+   *
+   * @param character existing {@link Character} to be saved.
+   */
+  public void save(final Character character) {
     checkNotNull(character, "Character");
     checkNotBlank(character.getName(), "Character Name");
     if (!characters.containsKey(character.getName())) {
@@ -82,9 +106,14 @@ public class CharacterRepository {
     } catch (IOException ex) {
       throw new SnakeWayException("Could not save Character State", ex);
     }
-    return character;
   }
 
+  /**
+   * Loads the data of one {@link Character}.
+   *
+   * @param name the name of the character.
+   * @return {@link Optional}, will be empty if the no character with the given nave was found.
+   */
   public Optional<Character> load(String name) {
     loadCharacterState();
 

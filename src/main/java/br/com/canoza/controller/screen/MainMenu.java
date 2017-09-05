@@ -2,6 +2,9 @@ package br.com.canoza.controller.screen;
 
 import java.util.Arrays;
 
+/**
+ * Initial screen of the game.
+ */
 public class MainMenu extends Screen {
 
   private static MainMenu mainMenu;
@@ -17,6 +20,11 @@ public class MainMenu extends Screen {
 
   }
 
+  /**
+   * Singleton implementation.
+   *
+   * @return an instance of {@link MainMenu}.
+   */
   public static MainMenu getInstance() {
     if (mainMenu == null) {
       mainMenu = new MainMenu(NewGame.getInstance(), LoadGame.getInstance());

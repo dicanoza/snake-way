@@ -2,7 +2,16 @@ package br.com.canoza.domain.model;
 
 import java.io.Serializable;
 
+/**
+ * Base for {@link Character} and {@link Enemy}, defines basic information like health, strength and
+ * speed.
+ */
 public abstract class BaseEntity implements Serializable {
+
+  private static final long serialVersionUID = 8214044594876696646L;
+  protected Integer strength;
+  protected Integer speed;
+  protected Integer health;
 
   @Override
   public boolean equals(Object o) {
@@ -31,14 +40,6 @@ public abstract class BaseEntity implements Serializable {
     result = 31 * result + (health != null ? health.hashCode() : 0);
     return result;
   }
-
-  private static final long serialVersionUID = 8214044594876696646L;
-
-
-  protected Integer strength;
-  protected Integer speed;
-  protected Integer health;
-
 
   public Integer getStrength() {
     return strength;

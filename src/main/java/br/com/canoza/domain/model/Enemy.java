@@ -1,5 +1,8 @@
 package br.com.canoza.domain.model;
 
+/**
+ * Represents an Enemy of the game.
+ */
 public class Enemy extends BaseEntity {
 
   private static final long serialVersionUID = 5820276049021318346L;

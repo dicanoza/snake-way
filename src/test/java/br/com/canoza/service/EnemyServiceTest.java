@@ -1,10 +1,8 @@
 package br.com.canoza.service;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import br.com.canoza.domain.model.Enemy;
-import java.util.Optional;
 import org.junit.Test;
 
 public class EnemyServiceTest {
@@ -13,11 +11,9 @@ public class EnemyServiceTest {
 
   @Test
   public void generateEnemy() {
-    Optional<Enemy> enemyOptional = enemyService.generateEnemy(12);
-    assertNotNull(enemyOptional);
-    assertTrue(enemyOptional.isPresent());
+    Enemy enemy = enemyService.generateEnemy(12);
+    assertNotNull(enemy);
 
-    Enemy enemy = enemyOptional.get();
     assertNotNull(enemy.getGivenExperience());
     assertNotNull(enemy.getHealth());
     assertNotNull(enemy.getSpeed());

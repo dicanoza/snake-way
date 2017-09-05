@@ -7,6 +7,9 @@ import br.com.canoza.service.CharacterService;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * Screen for creating a new game.
+ */
 public class NewGame extends Screen {
 
   private static NewGame newGame;
@@ -21,6 +24,10 @@ public class NewGame extends Screen {
         + "character";
   }
 
+  /**
+   * Singleton implementation.
+   * @return an instance of {@link NewGame}
+   */
   public static NewGame getInstance() {
     if (newGame == null) {
       newGame = new NewGame(Field.getInstance(), CharacterService.getInstance());

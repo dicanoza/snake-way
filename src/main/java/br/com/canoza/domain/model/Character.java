@@ -1,5 +1,9 @@
 package br.com.canoza.domain.model;
 
+/**
+ * Represents a Character of the game, it holds its status and other data for complete the game,
+ * like mapPosition and experience.
+ */
 public class Character extends BaseEntity {
 
   private static final long serialVersionUID = 8384460808672816945L;

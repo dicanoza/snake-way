@@ -9,6 +9,10 @@ import br.com.canoza.service.EncounterService;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * Screen to manage the game itself, responsible the fights, exploration and defining the end of the
+ * game.
+ */
 public class Field extends Screen {
 
   private static final int END = 25;
@@ -25,6 +29,11 @@ public class Field extends Screen {
     this.characterService = characterService;
   }
 
+  /**
+   * Singleton implementation.
+   *
+   * @return an instance of {@link Field}.
+   */
   public static Field getInstance() {
     if (field == null) {
       field = new Field(EncounterService.getInstance(), CharacterService.getInstance());
@@ -32,10 +41,23 @@ public class Field extends Screen {
     return field;
   }
 
+  /**
+   * Sets the field to not have enemies.
+   *
+   * @param character that going to explore that field.
+   */
   public void initSafeField(Character character) {
     initField(character, false, false);
   }
 
+  /**
+   * Sets the field following the options. It can have an Enemy or not.
+   *
+   * @param character that going to explore that field.
+   * @param canHaveEnemy determines if the field can have enemies.
+   * @param jump if the character is jumping that means it will have more chance to find an
+   *     enemy.
+   */
   private void initField(Character character, boolean canHaveEnemy, boolean jump) {
     if (canHaveEnemy) {
       configure(character, encounterService.getEncounter(character, jump));
@@ -47,6 +69,12 @@ public class Field extends Screen {
 
   }
 
+  /**
+   * Rests the field using the given parameters.
+   *
+   * @param character that is playing the game.
+   * @param enemy {@link Optional} of {@link Enemy}, say if the field will have an enemy.
+   */
   private void configure(Character character, Optional<Enemy> enemy) {
     title = "Field";
     message = "you get here";
@@ -61,6 +89,11 @@ public class Field extends Screen {
     }
   }
 
+  /**
+   * Checks if the game has ended, if the character has achieved the end position.
+   *
+   * @param mapPosition of th character.
+   */
   private void checkMapPosition(int mapPosition) {
     if (mapPosition >= END) {
       out.println("Congratulations!! You have reached King Kai planet!");
@@ -70,11 +103,21 @@ public class Field extends Screen {
 
   }
 
+  /**
+   * Moves the character to the next field.
+   *
+   * @param character to be moved.
+   */
   protected void runToFieldWithEnemy(Character character) {
     character.move(1);
     initField(character, true, false);
   }
 
+  /**
+   * Jumps the character to the next field.
+   *
+   * @param character character to be moved.
+   */
   protected void jumpToFieldWithEnemy(Character character) {
     character.move(3);
     initField(character, true, true);
@@ -103,6 +146,9 @@ public class Field extends Screen {
 
   }
 
+  /**
+   * Render the options for a field that have an Enemy.
+   */
   private void encounterRender() {
     int option = getOption();
     switch (option) {
@@ -117,63 +163,9 @@ public class Field extends Screen {
     }
   }
 
-  private void flee() {
-    if (encounterService.flee(character, enemy)) {
-      printActionResultMessage("Fled!");
-      initSafeField(character);
-    } else {
-      printActionResultMessage("Unable to flee, fighting!!");
-      fight();
-    }
-  }
-
-  private void fight() {
-    checkFightResult(encounterService.fight(character, enemy));
-  }
-
-  private void checkFightResult(int strike) {
-    if (strike > 0) {
-      hitEnemy(strike);
-    } else {
-      hitReceived(strike);
-    }
-  }
-
-  private void hitReceived(int strike) {
-    printActionResultMessage(String.format("Enemy hits you %d points.", Math.abs(strike)));
-    if (character.getHealth() <= 0) {
-      out.println("Your life has ended.");
-      out.println("GAME OVER");
-    } else {
-      this.render();
-    }
-  }
-
-  private void hitEnemy(int strike) {
-    printActionResultMessage(String.format("You hit the enemy %d points.", strike));
-    if (enemy.getHealth() > 0) {
-      this.render();
-    } else {
-      enemyDefeated();
-    }
-  }
-
-  private void enemyDefeated() {
-    printActionResultMessage(String
-        .format("You defeated the enemy, and gained %d points of experience.",
-            enemy.getGivenExperience()));
-    character.addExperience(enemy.getGivenExperience());
-
-    if (character.getExperience() >= 20) {
-      printActionResultMessage(
-          "Congratulations!! You have reached a proper level, I'll take you to King Kai!");
-    } else {
-      out.println("Going to next field");
-      character.resetHealth();
-      runToFieldWithEnemy(character);
-    }
-  }
-
+  /**
+   * Render the options for a field with no Enemy.
+   */
   private void noEncounterRender() {
     int option = getOption();
     switch (option) {
@@ -192,6 +184,94 @@ public class Field extends Screen {
     }
   }
 
+  /**
+   * Tries to flee with the character. If the character was enable to flee  {@link
+   * EncounterService#flee}, nothing will happen. Otherwise it'll trigger the fight operation {@link
+   * Field#fight}.
+   */
+  private void flee() {
+    if (encounterService.flee(character, enemy)) {
+      printActionResultMessage("Fled!");
+      initSafeField(character);
+    } else {
+      printActionResultMessage("Unable to flee, fighting!!");
+      fight();
+    }
+  }
+
+  /**
+   * Creates a fight between the Character and the Enemy. {@link EncounterService#fight}.
+   */
+  private void fight() {
+    checkFightResult(encounterService.fight(character, enemy));
+  }
+
+  /**
+   * Checks the hits resulted from a fight operation.
+   *
+   * @param strike if strike > 0, the Enemy was hit, otherwise the character was hit.
+   */
+  private void checkFightResult(int strike) {
+    if (strike > 0) {
+      hitEnemy(strike);
+    } else {
+      hitReceived(strike);
+    }
+  }
+
+  /**
+   * Applies the hit to the character.
+   *
+   * @param strike taken.
+   */
+  private void hitReceived(int strike) {
+    printActionResultMessage(String.format("Enemy hits you %d points.", Math.abs(strike)));
+    if (character.getHealth() <= 0) {
+      out.println("Your life has ended.");
+      out.println("GAME OVER");
+    } else {
+      this.render();
+    }
+  }
+
+  /**
+   * Applies the hit to the enemy.
+   *
+   * @param strike given.
+   */
+  private void hitEnemy(int strike) {
+    printActionResultMessage(String.format("You hit the enemy %d points.", strike));
+    if (enemy.getHealth() > 0) {
+      this.render();
+    } else {
+      enemyDefeated();
+    }
+  }
+
+  /**
+   * Checks if the enemy was defeated and if so, gives the experience to the character and checks if
+   * the character achieved the proper level to end the game.
+   */
+  private void enemyDefeated() {
+    printActionResultMessage(String
+        .format("You defeated the enemy, and gained %d points of experience.",
+            enemy.getGivenExperience()));
+    character.addExperience(enemy.getGivenExperience());
+
+    if (character.getExperience() >= 20) {
+      printActionResultMessage(
+          "Congratulations!! You have reached a proper level, I'll take you to King Kai!");
+    } else {
+      out.println("Going to next field");
+      character.resetHealth();
+      runToFieldWithEnemy(character);
+    }
+  }
+
+
+  /**
+   * Saves the state.
+   */
   private void save() {
     characterService.save(character);
     printActionResultMessage("Saved");

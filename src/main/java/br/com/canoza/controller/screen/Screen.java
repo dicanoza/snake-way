@@ -7,6 +7,9 @@ import static java.lang.System.out;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Basic class for all the screens, defines some utils methods and basic behavior.
+ */
 public abstract class Screen {
 
   public static final String LINE_SEPARATOR =
@@ -17,6 +20,11 @@ public abstract class Screen {
   protected String message;
   protected List<String> options;
 
+  /**
+   * This method is responsible for rendering the screen, subclasses of Screen can override this
+   * method to alter the basic behavior. The basic behavior is to print the Title, Message and
+   * options for input.
+   */
   public void render() {
     out.println(MENU_SEPARATOR);
     out.println(title);
@@ -28,15 +36,27 @@ public abstract class Screen {
 
   }
 
-  public Scanner getScanner() {
+  private Scanner getScanner() {
     return new Scanner(System.in);
   }
 
-  public int getOption() {
+  /**
+   * Reads the input and checks if the value is an integer and it is within the range of the
+   * options.
+   *
+   * @return the integer read.
+   */
+  protected int getOption() {
     return getOption(options.size() - 1);
   }
 
-  public int getOption(int max) {
+  /**
+   * Reads the input and checks if the input is within the range of 0 > input <= max.
+   *
+   * @param max accepted for the input.
+   * @return the input integer read.
+   */
+  protected int getOption(int max) {
     String input = readString();
     try {
       int opt = Integer.parseInt(input);
@@ -51,11 +71,20 @@ public abstract class Screen {
     }
   }
 
+  /**
+   * Reads an {@link String} from the input.
+   *
+   * @return the String read.
+   */
   String readString() {
     return getScanner().next();
   }
 
-
+  /**
+   * Prints the options to the standard output.
+   *
+   * @param options to be printed.
+   */
   public void printOptions(List<String> options) {
     out.println(LINE_SEPARATOR);
     out.println("Options:");
@@ -64,6 +93,11 @@ public abstract class Screen {
     }
   }
 
+  /**
+   * Prints the message with a line before. It's the basic way to print the result of actions.
+   *
+   * @param message to be printed.
+   */
   public void printActionResultMessage(String message) {
     out.println(LINE_SEPARATOR);
     out.println(message);
