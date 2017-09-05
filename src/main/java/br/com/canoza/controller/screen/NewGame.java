@@ -20,8 +20,7 @@ public class NewGame extends Screen {
     this.field = field;
     this.characterService = characterService;
     title = "Snake Way - New Character";
-    message = "This is time for you to start your adventure, let's choose a name for your "
-        + "character";
+    message = "Hey I don't remember you saying your name, what was that again?";
   }
 
   /**

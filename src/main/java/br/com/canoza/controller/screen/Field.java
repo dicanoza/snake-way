@@ -15,7 +15,8 @@ import java.util.Optional;
  */
 public class Field extends Screen {
 
-  private static final int END = 25;
+  private static final int END_OF_THE_WAY = 25;
+  private static final int MAX_EXPERIENCE = 20;
   private static Field field;
 
   private EncounterService encounterService;
@@ -76,9 +77,10 @@ public class Field extends Screen {
    * @param enemy {@link Optional} of {@link Enemy}, say if the field will have an enemy.
    */
   private void configure(Character character, Optional<Enemy> enemy) {
-    title = "Field";
-    message = "you get here";
     this.character = character;
+    title = "Snake Way - Field";
+    message = String.format("You have arrived to a new field. You have walked %s positions.",
+        character.getMapPosition());
 
     if (enemy.isPresent()) {
       this.enemy = enemy.get();
@@ -95,7 +97,7 @@ public class Field extends Screen {
    * @param mapPosition of th character.
    */
   private void checkMapPosition(int mapPosition) {
-    if (mapPosition >= END) {
+    if (mapPosition >= END_OF_THE_WAY) {
       out.println("Congratulations!! You have reached King Kai planet!");
     } else {
       this.render();
@@ -258,7 +260,7 @@ public class Field extends Screen {
             enemy.getGivenExperience()));
     character.addExperience(enemy.getGivenExperience());
 
-    if (character.getExperience() >= 20) {
+    if (character.getExperience() >= MAX_EXPERIENCE) {
       printActionResultMessage(
           "Congratulations!! You have reached a proper level, I'll take you to King Kai!");
     } else {

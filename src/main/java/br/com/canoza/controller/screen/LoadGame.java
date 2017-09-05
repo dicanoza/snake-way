@@ -19,8 +19,8 @@ public class LoadGame extends Screen {
   LoadGame(Field field, CharacterService characterService) {
     this.field = field;
     this.characterService = characterService;
-    title = "Load Game";
-    message = "Please insert the name of your character";
+    title = "Snake Way - Load Game";
+    message = "Let us continue our journey. Please insert the name of your character:";
   }
 
   /**
