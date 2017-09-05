@@ -32,8 +32,12 @@ Maven 3.3.9 or higher
 ### Installing and running
 
 
-There's no need of installation for you to run the game. You just need to open a command window at the project main folder and run the command below.
+To install the game, open a command window at the main directory of the project and run the command below.
 
+```
+mvn install
+```
+To run the game you must have installed it first and with the command window at the main directory of the project run the command below.
 ```
 mvn exec:java
 ```
