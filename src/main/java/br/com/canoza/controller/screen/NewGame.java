@@ -30,27 +30,28 @@ public class NewGame extends Screen {
 
   @Override
   public void render() {
-    out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    out.println(MENU_SEPARATOR);
     out.println(title);
-    out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    out.println(MENU_SEPARATOR);
     out.println(message);
-    out.println("------------------------------------------------------------");
+    out.println(LINE_SEPARATOR);
     out.println("Insert the Character Name:");
     String name = readString();
     Optional<Character> load = characterService.load(name);
     if (load.isPresent()) {
-      out.println("------------------------------------------------------------");
+
+      out.println(LINE_SEPARATOR);
       out.println("Character already exists, choose another name");
       render();
     } else {
 
       Character character = characterService.createCharacter(name);
 
-      out.println("------------------------------------------------------------");
+      out.println(LINE_SEPARATOR);
       out.println("This is your Character status");
       out.println(character);
 
-      out.println("------------------------------------------------------------");
+      out.println(LINE_SEPARATOR);
       out.println("Do you want to continue?");
       printOptions(Arrays.asList("Yes", "No"));
       if (getOption(1) == 1) {

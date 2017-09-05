@@ -1,6 +1,5 @@
 package br.com.canoza.controller.screen;
 
-
 import static java.lang.System.out;
 
 import br.com.canoza.domain.model.Character;
@@ -72,26 +71,29 @@ public class Field extends Screen {
   }
 
   protected void runToFieldWithEnemy(Character character) {
+    character.move(1);
     initField(character, true, false);
   }
 
   protected void jumpToFieldWithEnemy(Character character) {
+    character.move(3);
     initField(character, true, true);
   }
 
+  @Override
   public void render() {
-    out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    out.println(MENU_SEPARATOR);
     out.println(title);
-    out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    out.println(MENU_SEPARATOR);
     out.println(message);
-    out.println("------------------------------------------------------------");
+    out.println(LINE_SEPARATOR);
     out.println(character);
     if (enemy != null) {
-      out.println("------------------------------------------------------------");
+      out.println(LINE_SEPARATOR);
       out.println("Enemy appeared");
-      out.println("------------------------------------------------------------");
+      out.println(LINE_SEPARATOR);
       out.println(enemy);
-      out.println("------------------------------------------------------------");
+      out.println(LINE_SEPARATOR);
       printOptions(options);
       encounterRender();
     } else {
@@ -104,17 +106,14 @@ public class Field extends Screen {
   private void encounterRender() {
     int option = getOption();
     switch (option) {
-      case 0: {
+      case 0:
         fight();
         break;
-      }
-      case 1: {
+      case 1:
         flee();
         break;
-      }
-      case 2: {
+      default:
         return;
-      }
     }
   }
 
@@ -178,23 +177,18 @@ public class Field extends Screen {
   private void noEncounterRender() {
     int option = getOption();
     switch (option) {
-      case 0: {
-        character.move(1);
+      case 0:
         runToFieldWithEnemy(character);
         break;
-      }
-      case 1: {
-        character.move(3);
+      case 1:
         jumpToFieldWithEnemy(character);
         break;
-      }
-      case 2: {
+      case 2:
         save();
         return;
-      }
-      case 3: {
+      default:
         return;
-      }
+
     }
   }
 

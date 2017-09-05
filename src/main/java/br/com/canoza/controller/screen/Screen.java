@@ -9,16 +9,20 @@ import java.util.Scanner;
 
 public abstract class Screen {
 
+  public static final String LINE_SEPARATOR =
+      "------------------------------------------------------------";
+  public static final String MENU_SEPARATOR =
+      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
   protected String title;
   protected String message;
   protected List<String> options;
 
   public void render() {
-    out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    out.println(MENU_SEPARATOR);
     out.println(title);
-    out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    out.println(MENU_SEPARATOR);
     out.println(message);
-    out.println("------------------------------------------------------------");
+    out.println(LINE_SEPARATOR);
 
     printOptions(options);
 
@@ -53,7 +57,7 @@ public abstract class Screen {
 
 
   public void printOptions(List<String> options) {
-    out.println("------------------------------------------------------------");
+    out.println(LINE_SEPARATOR);
     out.println("Options:");
     for (int i = 0; i < options.size(); i++) {
       out.println(format("(%d) - %s", i, options.get(i)));
@@ -61,7 +65,7 @@ public abstract class Screen {
   }
 
   public void printActionResultMessage(String message) {
-    out.println("------------------------------------------------------------");
+    out.println(LINE_SEPARATOR);
     out.println(message);
   }
 

@@ -73,7 +73,7 @@ public class EncounterService {
     return Math.round(variable + variable * random.nextFloat());
   }
 
-  protected int randomNumber(){
+  protected int randomNumber() {
     return new Random().nextInt(BOUND);
   }
 }
